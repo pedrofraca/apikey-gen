@@ -1,9 +1,15 @@
+import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
+import { Queue } from 'bull';
 
 @Injectable()
 export class EmailQueueService {
-  enqueueEmail(email: string): string {
-    console.log("saving email in the queue for later processing");
-    return 'Hello World!';
+
+  constructor(@InjectQueue('email') private emailQueue: Queue) {}
+  
+  async enqueueEmail(email: string) {
+    const job = await this.emailQueue.add({
+      email: email,
+    });
   }
 }

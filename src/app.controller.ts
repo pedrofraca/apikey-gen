@@ -8,8 +8,8 @@ export class AppController {
   constructor(private readonly appService: EmailQueueService) {}
 
   @Post("save")
-  saveEmail(@Body() body: EnqueueEmailDto, @Res() response: Response) {
-    this.appService.enqueueEmail(body.email);
+  async saveEmail(@Body() body: EnqueueEmailDto, @Res() response: Response) {
+    await this.appService.enqueueEmail(body.email);
     response.status(201).send();
   }
 }
