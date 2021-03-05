@@ -16,7 +16,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should not crash"', () => {
-      expect(appController.saveEmail("email")).toBe('Hello World!');
+      expect(appController.saveEmail('email')).toBe('Hello World!');
     });
   });
 });

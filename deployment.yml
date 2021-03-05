@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: 2016-02-18T18:52:05Z
+  name: api-key-configmap
+  namespace: default
+  resourceVersion: "516"
+  uid: b4952dc3-d670-11e5-8cd0-68f728db1985
+data:
+  api.properties: |
+    REDIS=redis
+---    
+apiVersion: apps/v1
+kind : Deployment
+metadata:
+  name: api-key-gen-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api-key-gen
+  template:
+    metadata:
+      labels:
+        app: api-key-gen
+    spec:
+      containers:
+      - name: api-key-gen
+        image: pedrofraca/api-key-gen:1.0
+        ports:
+        - name: server-port
+          containerPort: 3000
+        env:
+          - name: REDIS
+            valueFrom:
+              configMapKeyRef:
+                name: api-key-configmap
+                key: REDIS
+---
+apiVersion : v1
+kind : Service
+metadata:
+  name: api-key-gen-service
+spec:
+  ports:
+  - port: 80
+    nodePort: 31001
+    targetPort: server-port
+    protocol: TCP
+  selector:
+    app: api-key-gen
+  type: NodePort
