@@ -4,11 +4,8 @@ metadata:
   creationTimestamp: 2016-02-18T18:52:05Z
   name: api-key-configmap
   namespace: default
-  resourceVersion: "516"
-  uid: b4952dc3-d670-11e5-8cd0-68f728db1985
 data:
-  api.properties: |
-    REDIS=redis
+  REDIS: redis-service
 ---    
 apiVersion: apps/v1
 kind : Deployment
@@ -44,7 +41,7 @@ metadata:
 spec:
   ports:
   - port: 80
-    nodePort: 31001
+    nodePort: 31002
     targetPort: server-port
     protocol: TCP
   selector:
