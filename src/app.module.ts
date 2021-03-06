@@ -17,7 +17,7 @@ import { TokenVerifier } from './services/tokenverifier.service';
     BullModule.registerQueue({
       name: 'email',
     }),
-    JwtModule.register({ secret: 'hard!to-guess_secret' }),
+    JwtModule.register({ secret: `${process.env.SECRET}` }),
   ],
   controllers: [AppController],
   providers: [EmailQueueService, EmailQueueConsumer, TokenVerifier],

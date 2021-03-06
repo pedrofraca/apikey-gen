@@ -12,7 +12,7 @@ kind : Deployment
 metadata:
   name: api-key-gen-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: api-key-gen
@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: api-key-gen
-        image: pedrofraca/api-key-gen:1.0
+        image: pedrofraca/api-key-gen:1.4
         ports:
         - name: server-port
           containerPort: 3000
@@ -33,6 +33,16 @@ spec:
               configMapKeyRef:
                 name: api-key-configmap
                 key: REDIS
+          - name: SENDGRID_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: api-key-gen-secrets
+                key: SENDGRID_API_KEY
+          - name: SECRET
+            valueFrom:
+              secretKeyRef:
+                name: api-key-gen-secrets
+                key: SECRET
 ---
 apiVersion : v1
 kind : Service

@@ -11,13 +11,15 @@ export class EmailQueueConsumer {
   async transcode(job: Job<unknown>) {
     const data = job.data as any;
     const token = this.jwtService.sign({ api: '' });
+    const link = `https://tour.silent.ws/api/email/verify/${token}`
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+    
     const msg = {
       to: data.email,
       from: 'api@silent.ws',
-      subject: 'Sending with SendGrid is Fun',
-      text: 'and easy to do anywhere, even with Node.js',
-      html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+      subject: 'Verify your email to active your API Key',
+      text: `This is your api key ${token}, follow this link to activate it ${link}.`,
+      html: `This is your api key <strong>${token}</strong>, please follow this <a href="${link}">link</a> to activate it.`,
     };
 
     sgMail
