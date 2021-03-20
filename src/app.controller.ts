@@ -20,8 +20,8 @@ export class AppController {
   @Get('verify/:token')
   async verifyToken(@Param('token') token: string, @Res() response: Response) {
     try {
-      await this.tokenVerifier.verifyToken(token);
-      response.status(200).send();
+      const apiKey = await this.tokenVerifier.verifyToken(token);
+      response.redirect(`https://tour.silent.ws/key/${apiKey}`)
     } catch {
       response.status(400).send();
     }

@@ -7,8 +7,8 @@ import { Queue } from 'bull';
 export class TokenVerifier {
   constructor(private readonly jwtService: JwtService) {}
 
-  async verifyToken(token: string): Promise<boolean> {
+  async verifyToken(token: string): Promise<string> {
     this.jwtService.verify(token);
-    return true;
+    return this.jwtService.sign({ api: '' });
   }
 }

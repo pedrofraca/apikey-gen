@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: api-key-gen
-        image: pedrofraca/api-key-gen:1.4
+        image: pedrofraca/api-key-gen:1.5
         ports:
         - name: server-port
           containerPort: 3000

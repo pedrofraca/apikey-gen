@@ -18,8 +18,8 @@ export class EmailQueueConsumer {
       to: data.email,
       from: 'api@silent.ws',
       subject: 'Verify your email to active your API Key',
-      text: `This is your api key ${token}, follow this link to activate it ${link}.`,
-      html: `This is your api key <strong>${token}</strong>, please follow this <a href="${link}">link</a> to activate it.`,
+      text: `Please open this link to get your API key ${link}.`,
+      html: `Please open this <a href="${link}">link</a> to get your API key.`,
     };
 
     sgMail
